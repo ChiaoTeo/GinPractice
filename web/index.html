@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ABC小组学习</title>
+</head>
+<body>
+    <div style="width:200px;height:100px;margin:auto">
+    </div>
+    <div style="width:200px;height:100px;margin:auto; text-align:center;">
+        <h1>立即登录</h1>
+    </div>
+    <div style="width:300px;height:200px;margin:auto;text-align: center;">
+        <form name="login_form" action="/server_url" method="post">
+            用户名:<input id="username" type="text" name="username" /><br>
+            密&nbsp;&nbsp; 码:<input id="password" type="password" name="password" />
+        </form>
+        <button id="btn-submit" onclick="beforeSubmit()">立即登陆</button>
+    </div>
+<script type="text/javascript">
+    function beforeSubmit() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        if (username.length < 3 || password.length < 3) {
+            alert('格式不正确！');
+            return;
+        }
+        
+        // 1.创建一个FormData对象，直接把我们的表单传进去  
+        var formData = new FormData(document.forms.namedItem("login_form"));
+        
+        // 2.创建一个http请求对象
+        var xmlHttpRequest = new XMLHttpRequest();
+        			xmlHttpRequest.responseType = 'json';
+        			xmlHttpRequest.open('post', '/user/login');
+       				xmlHttpRequest.onload = function(resp) {
+            		var jos=xmlHttpRequest.response
+				
+            		if (xmlHttpRequest.status == 200) {
+                		var estatus=eval('jos.status');  
+                		if (estatus=='0'){
+                    	alert('登录成功，正在跳转')
+                        //此处应添加登录之后的跳转动作
+                		}else{
+							alert('账号密码不正确，请检查')
+						}
+            		} else {
+                		alert('Error:' + xmlHttpRequest.status);
+            		}
+					};
+        xmlHttpRequest.send(formData);
+    }
+</script>
+</body>
+</html>
