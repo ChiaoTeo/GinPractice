@@ -11,7 +11,7 @@ func Login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	if username == "" {
-		fmt.Print("oooo")
+		fmt.Print("后台消息“不存在的用户要登陆")
 	}
 	fmt.Print(username)
 	fmt.Print(password)
