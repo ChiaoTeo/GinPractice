@@ -1,7 +1,7 @@
 package api
 
 import (
-	"GinPractice/userinfo"
+	"GinPractice/users"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
@@ -15,16 +15,26 @@ func Login(c *gin.Context) {
 	}
 	fmt.Print(username)
 	fmt.Print(password)
-	if userinfo.CheckValid(username, password) {
+	success, err := users.CheckVaild(username, password)
+	if err != nil {
 		c.JSON(200, gin.H{
-			//0代表无错误
-			"status":  "0",
-			"message": "信息正确，成功登录",
+			"status":  "10002",
+			"message": "数据库错误，请联系管理人员",
 		})
+
 	} else {
-		c.JSON(200, gin.H{
-			"status":  "00001",
-			"message": "用户名或密码不正确",
-		})
+		if success {
+			c.JSON(200, gin.H{
+				//0代表无错误
+				"status":  "0",
+				"message": "信息正确，成功登录",
+			})
+		} else {
+			c.JSON(200, gin.H{
+				"status":  "00001",
+				"message": "用户名或密码不正确",
+			})
+		}
 	}
+
 }

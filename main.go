@@ -2,6 +2,7 @@ package main
 
 import (
 	"GinPractice/api"
+	"GinPractice/conf"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +11,11 @@ import (
 // "github.com/gin-gonic/gin
 
 func main() {
+	//调用conf包里的DBInit函数，数据库用户名：root 密码：123456 ip地址：127.0.0.1 (也就是本机) 端口号：3306  数据库：ginpractice 解码方式utf8mb4
+	err := conf.DBInit("root:123456@(127.0.0.1:3306)/ginpractice?charset=utf8mb4")
+	if err != nil {
+		panic("数据库连接失败")
+	}
 	// router 是一个gin.Engine类型的指针，也就是说这个Default()做了这样一件事：
 	//初始化了一个gin的引擎，然后把这个引擎的指针返回，这样我们可以通过router对这个引擎进行操作
 	router := gin.Default()

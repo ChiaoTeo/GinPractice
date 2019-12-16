@@ -42,7 +42,8 @@
                     	alert('登录成功，正在跳转')
                         //此处应添加登录之后的跳转动作
                 		}else{
-							alert('账号密码不正确，请检查')
+                            var message=eval('jos.message')
+							alert(message)
 						}
             		} else {
                 		alert('Error:' + xmlHttpRequest.status);
